@@ -1,12 +1,14 @@
-import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_news_app/const/app_colors.dart';
-import 'package:my_news_app/core/router/router_pod.dart';
 import 'package:my_news_app/featured/signup/view/signup_page.dart';
-import 'package:my_news_app/shared/widget/no_internet_widget.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -27,7 +29,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Scaffold(
+      home: const Scaffold(
         body: SafeArea(
           child: SignUpPage(),
         ),

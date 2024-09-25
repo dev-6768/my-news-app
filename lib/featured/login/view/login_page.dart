@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_news_app/const/app_colors.dart';
-import 'package:my_news_app/featured/home/view/home_page.dart';
+import 'package:my_news_app/featured/login/controller/login_loading_controller.dart';
 import 'package:my_news_app/featured/signup/view/signup_page.dart';
-import 'package:my_news_app/shared/api_client/dio_client_provider.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({super.key});
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends ConsumerState<LoginPage> {
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(loginLoadingNotifier);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -27,100 +34,118 @@ class LoginPage extends StatelessWidget {
 
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FormBuilder(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      FormBuilderTextField(
-                        name: 'email',
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                          FormBuilderValidators.email(),
-                        ]),
-                      ),
-                      const SizedBox(height: 16),
-                      FormBuilderTextField(
-                        name: 'password',
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                        validator: FormBuilderValidators.required(),
-                      ),
-                      const SizedBox(height: 30),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState?.saveAndValidate() ??
-                                false) {
-                              Navigator.push(
-                                context, 
-                                MaterialPageRoute(builder: (context) => const HomePage())
-                              );
-                              talker.debug(_formKey.currentState?.value);
-                            } else {
-                              talker.debug("Validation failed");
-                            }
-                          },
-                          
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.appBarBackgroundColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-
-                          child: Text(
-                            'Login',
-                            style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              color: AppColors.kWhite,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(height: 0),
+            Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FormBuilder(
+                      key: _formKey,
+                      child: Column(
                         children: [
-                          const Text("New here?"),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context, 
-                                MaterialPageRoute(builder: (context) => SignUpPage())
-                              );
-                            },
-                            child: const Text(
-                              'Signup',
-                              style: TextStyle(color: AppColors.appBarBackgroundColor),
+                          FormBuilderTextField(
+                            name: 'email',
+                            decoration: InputDecoration(
+                              labelText: 'Email',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
                             ),
-                          )
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(),
+                              FormBuilderValidators.email(),
+                            ]),
+                          ),
+                          const SizedBox(height: 16),
+                          FormBuilderTextField(
+                            name: 'password',
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            validator: FormBuilderValidators.required(),
+                          ),
                         ],
-                      )
-                    ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ), 
+
+            Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: isLoading
+
+                  ? ElevatedButton(
+                    onPressed: () {
+                      
+                    },
+
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.appBarBackgroundColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+
+                    child: const CircularProgressIndicator(color: AppColors.kWhite),
+                  )
+                  
+                  : ElevatedButton(
+                    onPressed: () async {
+                      ref.read(loginLoadingNotifier.notifier).loadData(_formKey, context);
+                    },
+                    
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.appBarBackgroundColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+
+                    child: Text(
+                      'Login',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        color: AppColors.kWhite,
+                        fontWeight: FontWeight.w500
+                      ),
+                    ),
                   ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("New here?"),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => const SignUpPage())
+                        );
+                      },
+                      child: const Text(
+                        'Signup',
+                        style: TextStyle(color: AppColors.appBarBackgroundColor),
+                      ),
+                    )
+                  ],
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );
