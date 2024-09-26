@@ -6,9 +6,8 @@ import 'package:my_news_app/featured/signup/controller/signup_controller.dart';
 import 'package:my_news_app/shared/api_client/dio_client_provider.dart';
 
 class SignupLoadingNotifier extends StateNotifier<bool> {
-  SignupLoadingNotifier() : super(false); // Initial state is not loading
+  SignupLoadingNotifier() : super(false);
 
-  // Method to simulate an async operation
   Future<void> loadData(GlobalKey<FormBuilderState> formKey, BuildContext context) async {
     state = true;  // Start loading
     if (formKey.currentState?.saveAndValidate() ?? false) {
@@ -40,7 +39,6 @@ class SignupLoadingNotifier extends StateNotifier<bool> {
   }
 }
 
-// Step 2: Create a StateNotifierProvider for the LoadingNotifier
 final signupLoadingProvider = StateNotifierProvider<SignupLoadingNotifier, bool>((ref) {
   return SignupLoadingNotifier();
 });

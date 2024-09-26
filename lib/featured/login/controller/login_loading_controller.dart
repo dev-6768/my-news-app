@@ -13,18 +13,29 @@ class LoginLoadingNotifier extends StateNotifier<bool> {
     state = true;  // Start loading
     if (formKey.currentState?.saveAndValidate() ?? false) {
       var formData = formKey.currentState?.value;
-      await LoginController.handleSignInEmail(
+      final user = await LoginController.handleSignInEmail(
         context, 
         formData!["email"], 
         formData["password"]
       );
       
-      if(context.mounted) {
-        Navigator.push(
-          context, 
-          MaterialPageRoute(builder: (context) => const HomePage())
-        );
+
+      if(user != null) {
+        if(context.mounted) {
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context) => const HomePage())
+          );
+        }
+
+        state = false;
+
       }
+
+      else {
+        state = false;
+      }
+      
       talker.debug(formKey.currentState?.value);
     } 
     

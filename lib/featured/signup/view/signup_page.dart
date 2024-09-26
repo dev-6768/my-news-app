@@ -7,7 +7,6 @@ import 'package:my_news_app/const/app_colors.dart';
 import 'package:my_news_app/featured/login/view/login_page.dart';
 import 'package:my_news_app/featured/signup/controller/signup_loading_controller.dart';
 
-
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 

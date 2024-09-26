@@ -4,17 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_news_app/const/app_colors.dart';
 import 'package:my_news_app/core/router/router_pod.dart';
+import 'package:my_news_app/featured/home/controller/country_config_controller.dart';
 import 'package:my_news_app/featured/home/controller/country_provider.dart';
 import 'package:my_news_app/featured/home/view/widget/news_scroll_view_widget.dart';
 import 'package:my_news_app/shared/widget/no_internet_widget.dart'; // Import where your providers are defined
-
-final Map<String, String> countryCodes = {
-  "India": "IN",
-  "United States": "US",
-  "England": "EN",
-  "South Africa": "SA",
-  "China": "CN",
-};
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -28,11 +21,24 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class HomeView extends ConsumerWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends ConsumerState<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(countryCodesProvider.notifier).fetchCountryCodes();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     String selectedCountryLabel = ref.watch(countryProvider);
+    final countryCodes = ref.watch(countryCodesProvider);
 
     return Container(
       decoration: const BoxDecoration(
@@ -67,6 +73,7 @@ class HomeView extends ConsumerWidget {
               onSelected: (String country) {
                 // Update the selected country in the provider
                 ref.read(countryProvider.notifier).state = countryCodes[country]!;
+                
               },
               icon: Padding(
                 padding: const EdgeInsets.only(right: 16.0),
