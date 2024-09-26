@@ -61,7 +61,7 @@ class NewsItemWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  DateTime.now().difference(timeStamp).inMinutes.toString(),
+                  "${DateTime.now().difference(timeStamp).inMinutes.toString()} min ago",
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     color: Colors.black38,

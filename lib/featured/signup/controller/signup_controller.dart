@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_news_app/const/app_colors.dart';
+import 'package:my_news_app/featured/home/view/home_page.dart';
 import 'package:my_news_app/shared/api_client/dio_client_provider.dart';
 
 class SignupController {
@@ -36,6 +37,13 @@ class SignupController {
             ),
           )),
         );
+
+        if(context.mounted) { 
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context) => const HomePage())
+          );
+        }
       }
     }
 

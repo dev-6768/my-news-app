@@ -22,7 +22,7 @@ class NewsService {
             source: element["source"]["name"] ?? "Source", 
             description: element["description"] ?? "Description", 
             imageUrl: element["urlToImage"] ?? "url", 
-            timestamp: DateTime.now()
+            timestamp: DateTime.parse(element["publishedAt"]),
           ));
       }
       return news;
