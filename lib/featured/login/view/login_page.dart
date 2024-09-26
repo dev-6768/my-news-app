@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_news_app/const/app_colors.dart';
 import 'package:my_news_app/featured/login/controller/login_loading_controller.dart';
 import 'package:my_news_app/featured/login/controller/populate_login_controller.dart';
+import 'package:my_news_app/featured/login/view/widget/text_field_widget.dart';
 import 'package:my_news_app/featured/signup/view/signup_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -56,33 +56,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          FormBuilderTextField(
-                            name: 'email',
-                            initialValue: authData["email"],
-                            decoration: InputDecoration(
-                              labelText: 'Email',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                            ),
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(),
-                              FormBuilderValidators.email(),
-                            ]),
-                          ),
+                          LoginFormEmailTextFieldWidget(initialValue: authData["email"] ?? ""),
                           const SizedBox(height: 16),
-                          FormBuilderTextField(
-                            name: 'password',
-                            initialValue: authData["password"],
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                            ),
-                            validator: FormBuilderValidators.required(),
-                          ),
+                          LoginFormPasswordTextFieldWidget(initialValue: authData["password"] ?? ""),
                         ],
                       ),
                     ),
