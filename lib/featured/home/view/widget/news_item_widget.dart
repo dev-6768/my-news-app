@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_news_app/const/app_colors.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NewsItemWidget extends StatelessWidget {
   final String imageUrl;
@@ -61,7 +62,7 @@ class NewsItemWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "${DateTime.now().difference(timeStamp).inMinutes.toString()} min ago",
+                  timeago.format(DateTime.now().subtract(DateTime.now().difference(timeStamp))),
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     color: Colors.black38,

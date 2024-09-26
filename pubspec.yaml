@@ -50,6 +50,7 @@ dependencies:
   cloud_firestore: ^5.4.2
   firebase_remote_config: ^5.1.2
   shared_preferences: ^2.3.2
+  timeago: ^3.7.0
 
 dev_dependencies:
   flutter_test:
