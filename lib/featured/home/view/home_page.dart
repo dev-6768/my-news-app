@@ -47,12 +47,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.appBarBackgroundColor,
+          iconTheme: const IconThemeData( color: AppColors.kWhite),
           title: Text(
             'MyNews',
             style: GoogleFonts.poppins(
-              textStyle: const TextStyle(
-                color: AppColors.kWhite,
-              ),
+              color: AppColors.kWhite,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -80,9 +79,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 child: Text(
                   selectedCountryLabel,
                   style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
-                      color: AppColors.kWhite,
-                    ),
+                    color: AppColors.kWhite,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -91,7 +88,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 return countryCodes.keys.map((String country) {
                   return PopupMenuItem<String>(
                     value: country,
-                    child: Text(country),
+                    child: Text(
+                      country,
+                      style: GoogleFonts.poppins(
+                        color: AppColors.kBlack,
+                      ),
+                    ),
                   );
                 }).toList();
               },
@@ -107,10 +109,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
               Text(
                 'Top Headlines',
                 style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    color: AppColors.kBlack,
-                    fontSize: 18.0,
-                  ),
+                  color: AppColors.kBlack,
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
 
                 ),

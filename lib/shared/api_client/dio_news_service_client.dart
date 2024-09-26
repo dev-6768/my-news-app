@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:my_news_app/const/sample_data.dart';
 import 'package:my_news_app/const/string_constants.dart';
 import 'package:my_news_app/featured/home/view/widget/news_model.dart';
 import 'package:my_news_app/shared/api_client/dio_client_provider.dart';
@@ -7,9 +6,9 @@ import 'package:my_news_app/shared/api_client/dio_client_provider.dart';
 class NewsService {
   final Dio _dio = Dio();
 
-  Future<List<News>> fetchNews() async {
+  Future<List<News>> fetchNews(String country) async {
     final response = await _dio.get(
-      StringConstants.developmentBaseUrl
+      "${StringConstants.developmentBaseUrl}v2/top-headlines?country=${country.toLowerCase()}&apiKey=${StringConstants.apiKey}"
     );
     
     final List<dynamic>? data = response.data["articles"];
@@ -30,7 +29,7 @@ class NewsService {
     }
 
     else {
-      return SampleData.sampleNewsData;
+      return [];
     }
   }
 }

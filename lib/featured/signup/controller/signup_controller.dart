@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:my_news_app/const/app_colors.dart';
 import 'package:my_news_app/shared/api_client/dio_client_provider.dart';
 
 class SignupController {
@@ -27,7 +29,12 @@ class SignupController {
 
       if(context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User Registration Successfully!')),
+          SnackBar(content: Text(
+            'User Registration Successfully!',
+            style: GoogleFonts.poppins(
+              color: AppColors.kWhite,
+            ),
+          )),
         );
       }
     }
@@ -35,7 +42,12 @@ class SignupController {
     catch(exception) {
       if(context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User Registration Failed!')),
+          SnackBar(content: Text(
+            'User Registration Failed!',
+            style: GoogleFonts.poppins(
+              color: AppColors.kWhite,
+            ),
+          )),
         );
       }
     }

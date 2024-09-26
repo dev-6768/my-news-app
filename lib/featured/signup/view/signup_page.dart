@@ -143,21 +143,30 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Already have an account?"),
-                    TextButton(
-                      onPressed: () {
+                    Text(
+                      "Already have an account? ",
+                      style: GoogleFonts.poppins(
+                        color: AppColors.kBlack
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
                         Navigator.push(
                           context, 
                           MaterialPageRoute(builder: (context) => const LoginPage())
                         );
                       },
-                      child: const Text(
+                      child: Text(
                         'Login',
-                        style: TextStyle(color: AppColors.appBarBackgroundColor),
+                        style: GoogleFonts.poppins(
+                          color: AppColors.appBarBackgroundColor,
+                        ),
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
+
+                const SizedBox(height: 20),
               ],
             ),
           ],

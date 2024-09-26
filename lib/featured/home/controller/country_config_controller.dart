@@ -4,11 +4,12 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:my_news_app/shared/api_client/dio_client_provider.dart';
 
 class CountryCodesNotifier extends StateNotifier<Map<String, String>> {
+  //default countries in case firebase remote config doesn't work.
   CountryCodesNotifier() : super(
     {
       "India": "IN",
       "United States": "US",
-      "England": "EN",
+      "England": "GB",
     }
   );
   Future<void> fetchCountryCodes() async {
@@ -31,10 +32,11 @@ class CountryCodesNotifier extends StateNotifier<Map<String, String>> {
     } 
     
     catch (e) {
+      //default countries in case firebase remote config doesn't work.
       state = {
         "India": "IN",
         "United States": "US",
-        "England": "EN",
+        "England": "GB",
       };
       talker.debug('Error fetching country codes: $e');
     }

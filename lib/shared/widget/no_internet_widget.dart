@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:my_news_app/const/app_colors.dart';
 import 'package:my_news_app/shared/api_client/dio_client_provider.dart';
@@ -102,9 +103,9 @@ class _DefaultNoInternetState extends ConsumerState<DefaultNoInternetWidget> {
           child: status == InternetStatus.disconnected
               ? SafeArea(child: ((widget.noInternetWidget) ??
                       MaterialBanner(
-                        content: const Text(
+                        content: Text(
                           'No Internet Available',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             color: Colors.red,
                           ),
                         ),
@@ -113,9 +114,12 @@ class _DefaultNoInternetState extends ConsumerState<DefaultNoInternetWidget> {
                             onPressed: () {
                               ref.invalidate(internetCheckerPod);
                             },
-                            child: const Text(
+                            child: Text(
                               'OK',
-                              key: ValueKey('OK_BUTTON'),
+                              style: GoogleFonts.poppins(
+                                color: AppColors.kBlack,
+                              ),
+                              key: const ValueKey('OK_BUTTON'),
                             ),
                           ),
                         ],
@@ -127,7 +131,7 @@ class _DefaultNoInternetState extends ConsumerState<DefaultNoInternetWidget> {
         content:
             Text(
               "Unable to check internet due to $error",
-              style: const TextStyle(
+              style: GoogleFonts.poppins(
                 color: AppColors.kRed,
               ),
             ),
@@ -136,9 +140,9 @@ class _DefaultNoInternetState extends ConsumerState<DefaultNoInternetWidget> {
             onPressed: () {
               ref.invalidate(internetCheckerPod);
             },
-            child: const Text(
+            child: Text(
               'Retry',
-              style: TextStyle(
+              style: GoogleFonts.poppins(
                 color: AppColors.kRed,
               ),
             )

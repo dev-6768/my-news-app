@@ -5,6 +5,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_news_app/const/app_colors.dart';
 import 'package:my_news_app/featured/login/controller/login_loading_controller.dart';
+import 'package:my_news_app/featured/login/controller/populate_login_controller.dart';
 import 'package:my_news_app/featured/signup/view/signup_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -16,9 +17,17 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class _LoginPageState extends ConsumerState<LoginPage> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(authProvider.notifier).loadCredentials();
+  }
+  
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(loginLoadingNotifier);
+    final authData = ref.watch(authProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -49,6 +58,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         children: [
                           FormBuilderTextField(
                             name: 'email',
+                            initialValue: authData["email"],
                             decoration: InputDecoration(
                               labelText: 'Email',
                               border: OutlineInputBorder(
@@ -63,6 +73,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           const SizedBox(height: 16),
                           FormBuilderTextField(
                             name: 'password',
+                            initialValue: authData["password"],
                             obscureText: true,
                             decoration: InputDecoration(
                               labelText: 'Password',
@@ -124,25 +135,36 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                
+                const SizedBox(height: 10),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("New here?"),
-                    TextButton(
-                      onPressed: () {
+                    Text(
+                      "New here? ",
+                      style: GoogleFonts.poppins(
+                        color: AppColors.kBlack,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
                         Navigator.push(
                           context, 
                           MaterialPageRoute(builder: (context) => const SignUpPage())
                         );
                       },
-                      child: const Text(
+                      child: Text(
                         'Signup',
-                        style: TextStyle(color: AppColors.appBarBackgroundColor),
+                        style: GoogleFonts.poppins(
+                          color: AppColors.appBarBackgroundColor
+                        ),
                       ),
                     )
                   ],
                 ),
+
+                const SizedBox(height: 20),
               ],
             ),
           ],

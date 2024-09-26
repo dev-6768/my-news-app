@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:my_news_app/const/app_colors.dart';
 
 class NewsItemWidget extends StatelessWidget {
   final String imageUrl;
@@ -41,7 +43,7 @@ class NewsItemWidget extends StatelessWidget {
               children: [
                 Text(
                   source,
-                  style: const TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -49,9 +51,9 @@ class NewsItemWidget extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: const TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 14,
-                    color: Colors.black54,
+                    color: AppColors.kBlack,
                     fontWeight: FontWeight.w500,
                   ),
                   maxLines: 3,
@@ -59,8 +61,8 @@ class NewsItemWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  timeStamp.toIso8601String(),
-                  style: const TextStyle(
+                  DateTime.now().difference(timeStamp).inMinutes.toString(),
+                  style: GoogleFonts.poppins(
                     fontSize: 12,
                     color: Colors.black38,
                   ),
